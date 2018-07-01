@@ -6,7 +6,7 @@
  * @param   {Number}   direction   Integer; 1 = CW, -1 = CCW
  * @returns {Array}                Rotated 2D tetromino matrix
 */
-const rotateMatrix = (matrix, direction) => {
+const rotate = (matrix, direction) => {
   const newMatrix = matrix.map(row => row.slice());
   
   for (let y = 0; y < matrix.length; y++) {
@@ -25,4 +25,4 @@ const rotateMatrix = (matrix, direction) => {
   return newMatrix;
 };
 
-export default rotateMatrix;
+export default rotate;

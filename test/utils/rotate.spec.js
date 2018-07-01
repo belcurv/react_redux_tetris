@@ -3,7 +3,7 @@
 /* ================================= SETUP ================================= */
 
 import { assert }   from 'chai';
-import rotateMatrix from '../../src/utils/rotateMatrix';
+import rotate from '../../src/utils/rotate';
 
 
 /* ================================= TESTS ================================= */
@@ -19,7 +19,7 @@ describe('rotateMatrix utility', () => {
       [1, 0],
       [1, 1]
     ];
-    assert.deepEqual(rotateMatrix(matrix, 1), expected);
+    assert.deepEqual(rotate(matrix, 1), expected);
   });
 
   it('should rotate a 2x2 matrix counter-clockwise', () => {
@@ -31,7 +31,7 @@ describe('rotateMatrix utility', () => {
       [1, 1],
       [1, 1]
     ];
-    assert.deepEqual(rotateMatrix(matrix, -1), expected);
+    assert.deepEqual(rotate(matrix, -1), expected);
   });
 
   it('should rotate a 3x3 matrix clockwise', () => {
@@ -45,7 +45,7 @@ describe('rotateMatrix utility', () => {
       [0, 1, 1],
       [0, 1, 0]
     ];
-    assert.deepEqual(rotateMatrix(matrix, 1), expected);
+    assert.deepEqual(rotate(matrix, 1), expected);
   });
 
   it('should rotate a 3x3 matrix counter-clockwise', () => {
@@ -59,7 +59,7 @@ describe('rotateMatrix utility', () => {
       [1, 1, 0],
       [0, 1, 0]
     ];
-    assert.deepEqual(rotateMatrix(matrix, -1), expected);
+    assert.deepEqual(rotate(matrix, -1), expected);
   });
 
   it('should rotate a 3x3 matrix clockwise', () => {
@@ -73,7 +73,7 @@ describe('rotateMatrix utility', () => {
       [0, 1, 1],
       [0, 0, 1]
     ];
-    assert.deepEqual(rotateMatrix(matrix, 1), expected);
+    assert.deepEqual(rotate(matrix, 1), expected);
   });
 
   it('should rotate a 3x3 matrix counter-clockwise', () => {
@@ -87,7 +87,7 @@ describe('rotateMatrix utility', () => {
       [1, 1, 0],
       [0, 1, 0]
     ];
-    assert.deepEqual(rotateMatrix(matrix, -1), expected);
+    assert.deepEqual(rotate(matrix, -1), expected);
   });
 
   it('should rotate a 4x4 matrix clockwise', () => {
@@ -103,7 +103,7 @@ describe('rotateMatrix utility', () => {
       [0, 0, 0, 0],
       [0, 0, 0, 0]
     ];
-    assert.deepEqual(rotateMatrix(matrix, 1), expected);
+    assert.deepEqual(rotate(matrix, 1), expected);
   });
 
   it('should rotate a 4x4 matrix counter-clockwise', () => {
@@ -119,7 +119,7 @@ describe('rotateMatrix utility', () => {
       [1, 1, 1, 1],
       [0, 0, 0, 0]
     ];
-    assert.deepEqual(rotateMatrix(matrix, -1), expected);
+    assert.deepEqual(rotate(matrix, -1), expected);
   });
 
 });
