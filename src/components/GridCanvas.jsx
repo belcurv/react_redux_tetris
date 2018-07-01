@@ -4,10 +4,21 @@ import Canvas from './Canvas';
 
 export default class GridCanvas extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = { ctx: null };
-  }
+  state = { ctx: null };
+
+  static propTypes = {
+    // stroke color for the grid line
+    color: PropTypes.string,
+    
+    // the width, in pixels, for the grid line
+    lineWidth: PropTypes.number,
+    offsetX: PropTypes.number,
+    offsetY: PropTypes.number,
+    
+    squareSize: PropTypes.number,
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired
+  };
 
   renderGrid() {
     const { color, lineWidth, squareSize, offsetX, offsetY, width, height } = this.props;
@@ -46,7 +57,7 @@ export default class GridCanvas extends Component {
       this.renderGrid();
     }
     return (
-      <Canvas className={ `GridCanvas ${this.props.className}`}
+      <Canvas className={ 'GridCanvas' }
         width={ width } height={ height }
         onContext={ ctx => this.setState({ ctx })}
       />
@@ -54,18 +65,3 @@ export default class GridCanvas extends Component {
   }
 
 }
-
-GridCanvas.propTypes = {
-  // color for the stroke of the outline of the grid
-  color: PropTypes.string,
-  className: PropTypes.string,
-  
-  // the width, in pixels, for the grid line
-  lineWidth: PropTypes.number,
-  offsetX: PropTypes.number,
-  offsetY: PropTypes.number,
-  
-  squareSize: PropTypes.number,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired
-};

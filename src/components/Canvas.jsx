@@ -3,10 +3,14 @@ import PropTypes from 'prop-types';
 
 export default class Canvas extends Component {
 
-  constructor(props) {
-    super(props);
-    this.canvasRef = React.createRef();
-  }
+  canvasRef = React.createRef();
+
+  static propTypes = {
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    onContext: PropTypes.func.isRequired,
+    className: PropTypes.string
+  };
 
   componentDidMount() {
     let canvas = this.canvasRef.current;
@@ -26,10 +30,3 @@ export default class Canvas extends Component {
   }
 
 }
-
-Canvas.propTypes = {
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  onContext: PropTypes.func.isRequired,
-  className: PropTypes.string
-};
