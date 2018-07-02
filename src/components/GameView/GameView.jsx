@@ -1,12 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+/* ================================= SETUP ================================= */
+
+import React       from 'react';
+import PropTypes   from 'prop-types';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+
 import Canvas from '../Canvas/Canvas';
+
+
+/* =========================== CLASS DEFINITION ============================ */
 
 class GameView extends React.Component {
 
-  state = { context : null };
+  state  = { context : null };
   colors = [
     null,      '#FF0D72', '#0DC2FF', '#0DFF72',
     '#F538FF', '#FF8E0D', '#FFE138', '#3877FF'
@@ -16,15 +21,11 @@ class GameView extends React.Component {
     const { context } = this.state;
     context.fillStyle = '#000';
     context.fillRect(0, 0, this.props.arena.width, this.props.arena.height);
-    // console.log('draw arena');
     this.drawMatrix(this.props.arena, { x : 0, y : 0 });
-    // console.log('draw player');
     this.drawMatrix(this.props.player.matrix, this.props.player.pos);
   }
 
   drawMatrix(matrix, offset) {
-    // console.log('matrix', matrix);
-    // console.log('offset', offset);
     const { context } = this.state;
     matrix.forEach((row, y) => {
       row.forEach((value, x) => {
@@ -53,6 +54,8 @@ class GameView extends React.Component {
 
 }
 
+/* ====================== CONNECT COMPONENT TO STORE ======================= */
+
 GameView.propTypes = {
   arena : PropTypes.array.isRequired,
   canvas : PropTypes.shape({
@@ -76,10 +79,4 @@ const mapStateToProps = (state) => ({
   player : state.game.player
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators({
-    
-  }, dispatch)
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(GameView);
+export default connect(mapStateToProps, null)(GameView);
