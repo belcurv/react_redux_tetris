@@ -21,7 +21,8 @@ import {
 import {
   mergePlayerArena,
   resetArena,
-  updateArena
+  updateArena,
+  pauseToggle
 } from '../store/actions/gameActions';
 
 import GameView   from './GameView/GameView';
@@ -85,37 +86,43 @@ class App extends React.Component {
   }
 
   playerMove = (direction) => {
-    this.props.actions.playerMove(direction);
-    if (collides(this.props.arena, this.props.player)) {
-      this.props.actions.playerMove(-direction);
+    if (!this.props.gameState.paused) {
+      this.props.actions.playerMove(direction);
+      if (collides(this.props.arena, this.props.player)) {
+        this.props.actions.playerMove(-direction);
+      }
     }
   }
 
   playerDrop = () => {
-    this.props.actions.playerDrop();
-    if (collides(this.props.arena, this.props.player)) {
-      this.props.actions.playerDrop(-1);
-      this.props.actions.mergePlayerArena(this.props.player, this.props.arena);
-      // check for filled rows
-      this.arenaSweep();
-
-      // reset player. Create new piece at top
-      this.props.actions.playerReset(this.props.player);
-      // if we collide immediately after resetting, it means we've filed
-      // rubble to the top or the arena = game over
+    if (!this.props.gameState.paused) {
+      this.props.actions.playerDrop();
       if (collides(this.props.arena, this.props.player)) {
-        this.props.actions.resetArena();
-        this.props.actions.resetScore();
+        this.props.actions.playerDrop(-1);
+        this.props.actions.mergePlayerArena(this.props.player, this.props.arena);
+        // check for filled rows
+        this.arenaSweep();
+        
+        // reset player. Create new piece at top
+        this.props.actions.playerReset(this.props.player);
+        // if we collide immediately after resetting, it means we've filed
+        // rubble to the top or the arena = game over
+        if (collides(this.props.arena, this.props.player)) {
+          this.props.actions.resetArena();
+          this.props.actions.resetScore();
+        }
       }
+      this.setState({ dropCounter: 0 });
     }
-    this.setState({ dropCounter: 0 });
   }
 
   // tries to rotate the player matrix.
   playerRotate = (direction) => {
-    this.props.actions.playerRotate(direction);
-    if ((collides(this.props.arena, this.props.player))) {
-      this.props.actions.playerRotate(-direction);
+    if (!this.props.gameState.paused) {
+      this.props.actions.playerRotate(direction);
+      if ((collides(this.props.arena, this.props.player))) {
+        this.props.actions.playerRotate(-direction);
+      }
     }
 
     // if we colide with something, kick position left/right
@@ -139,7 +146,7 @@ class App extends React.Component {
 
   startLoop = () => {
     if (!this.frameId) {
-      this.frameId = window.requestAnimationFrame(this.loop);
+      this.frameId = window.requestAnimationFrame(this.update);
     }
   }
 
@@ -147,25 +154,34 @@ class App extends React.Component {
     window.cancelAnimationFrame(this.frameId);
   }
 
-  loop = (time = 0) => {
+  update = (time = 0) => {
     // perform loop work here
-    const deltaTime = time - this.state.lastTime;
-    this.setState(prevState => ({ dropCounter: prevState.dropCounter + deltaTime }));
-
-    if(this.state.dropCounter > this.state.dropInterval) {
-      this.playerDrop();
+    if (!this.props.gameState.paused) {
+      const deltaTime = time - this.state.lastTime;
+      this.setState(prevState => (
+        { dropCounter: prevState.dropCounter + deltaTime }
+      ));
+  
+      if(this.state.dropCounter > this.state.dropInterval) {
+        this.playerDrop();
+      }
+  
+      this.setState({ lastTime: time });
     }
 
-    this.setState({ lastTime: time });
-
     // set up next iteration of the loop
-    this.frameId = window.requestAnimationFrame(this.loop);
+    this.frameId = window.requestAnimationFrame(this.update);
+  }
+
+  onPauseToggle = () => {
+    this.props.actions.pauseToggle();
   }
 
   render() {
     return (
       <div className="app-container">
-        <ScoreBoard score={ this.props.player.score } />
+        <ScoreBoard score={ this.props.player.score }
+          pauseToggle={ this.onPauseToggle } />
         <GameView />
       </div>
     );
@@ -175,6 +191,9 @@ class App extends React.Component {
 
 App.propTypes = {
   arena : PropTypes.array.isRequired,
+  gameState : PropTypes.shape({
+    paused : PropTypes.bool
+  }).isRequired,
   player : PropTypes.shape({
     matrix : PropTypes.array,
     pos : PropTypes.shape({
@@ -193,7 +212,8 @@ App.propTypes = {
     resetScore       : PropTypes.func,
     mergePlayerArena : PropTypes.func,
     resetArena       : PropTypes.func,
-    updateArena      : PropTypes.func
+    updateArena      : PropTypes.func,
+    pauseToggle      : PropTypes.func
   }).isRequired
 };
 
@@ -201,6 +221,7 @@ App.propTypes = {
 
 const mapStateToProps = (state) => ({
   arena  : state.game.arena,
+  gameState : state.game.gameState,
   player : state.game.player
 });
 
@@ -215,7 +236,8 @@ const mapDispatchToProps = (dispatch) => ({
     resetScore,
     mergePlayerArena,
     resetArena,
-    updateArena
+    updateArena,
+    pauseToggle
   }, dispatch)
 });
 
