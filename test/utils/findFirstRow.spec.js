@@ -8,7 +8,7 @@ import findFirstRow from '../../src/utils/findFirstRow';
 
 /* ================================= TESTS ================================= */
 
-describe('collides utility', () => {
+describe('findFirstRow utility', () => {
 
   it('should return 0 for "O"', () => {
     const oh = [
