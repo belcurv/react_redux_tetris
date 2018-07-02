@@ -13,7 +13,8 @@ import {
 import {
   MERGE_PLAYER_ARENA,
   RESET_ARENA,
-  UPDATE_ARENA
+  UPDATE_ARENA,
+  PAUSE_TOGGLE
 } from '../actions/gameActions';
 
 const initialGameState = {
@@ -27,6 +28,9 @@ const initialGameState = {
     width  : 240,
     height : 400,
     scale  : 20
+  },
+  gameState : {
+    paused : false
   }
 };
 
@@ -35,7 +39,6 @@ export default (state = initialGameState, action) => {
   switch (action.type) {
 
     case PLAYER_ROTATE:
-      console.log(action.type, action.direction);
       return {
         ...state,
         player: {
@@ -45,7 +48,6 @@ export default (state = initialGameState, action) => {
       };
 
     case PLAYER_MOVE:
-      console.log(action.type, action.offset);
       return {
         ...state,
         player: {
@@ -58,7 +60,6 @@ export default (state = initialGameState, action) => {
       };
 
     case PLAYER_DROP:
-      console.log(action.type);
       return {
         ...state,
         player: {
@@ -71,14 +72,12 @@ export default (state = initialGameState, action) => {
       };
 
     case PLAYER_RESET:
-      console.log(action.type);
       return {
         ...state,
         player: (resetPlayer(state.player, state.arena))
       };
 
     case PLAYER_SET_X:
-      console.log(action.type);
       return {
         ...state,
         player: {
@@ -90,14 +89,12 @@ export default (state = initialGameState, action) => {
       };
 
     case MERGE_PLAYER_ARENA:
-      console.log(action.type);
       return {
         ...state,
         arena: merge(action.player, action.arena)
       };
 
     case UPDATE_SCORE:
-      console.log(action.type);
       return {
         ...state,
         player: {
@@ -107,7 +104,6 @@ export default (state = initialGameState, action) => {
       };
 
     case RESET_SCORE:
-      console.log(action.type);
       return {
         ...state,
         player: {
@@ -117,17 +113,24 @@ export default (state = initialGameState, action) => {
       };
 
     case RESET_ARENA:
-      console.log(action.type);
       return {
         ...state,
         arena: createMatrix(12, 20)
       };
 
     case UPDATE_ARENA:
-      console.log(action.type);
       return {
         ...state,
         arena: action.newArena
+      };
+
+    case PAUSE_TOGGLE:
+      return {
+        ...state,
+        gameState: {
+          ...state.gameState,
+          paused: !state.gameState.paused
+        }
       };
 
     default:
