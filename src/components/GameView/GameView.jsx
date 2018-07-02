@@ -64,7 +64,6 @@ GameView.propTypes = {
     scale  : PropTypes.number
   }).isRequired,
   player : PropTypes.shape({
-    score  : PropTypes.number,
     matrix : PropTypes.array,
     pos : PropTypes.shape({
       x : PropTypes.number,
