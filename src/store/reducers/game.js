@@ -5,7 +5,6 @@ import {
   PLAYER_MOVE,
   PLAYER_DROP,
   PLAYER_RESET,
-  PLAYER_SET_X,
   UPDATE_SCORE,
   RESET_SCORE
 } from '../actions/playerActions';
@@ -21,7 +20,7 @@ const initialGameState = {
   player : {
     score  : 0,
     matrix : [],
-    pos : { x : 0, y : 0 }
+    pos    : { x : 0, y : 0 }
   },
   arena : createMatrix(12, 20),
   canvas : {
@@ -75,17 +74,6 @@ export default (state = initialGameState, action) => {
       return {
         ...state,
         player: (resetPlayer(state.player, state.arena))
-      };
-
-    case PLAYER_SET_X:
-      return {
-        ...state,
-        player: {
-          ...state.player,
-          pos: {
-            x: action.xPos
-          }
-        }
       };
 
     case MERGE_PLAYER_ARENA:
