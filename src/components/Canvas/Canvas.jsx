@@ -1,4 +1,4 @@
-import React from 'react';
+import React     from 'react';
 import PropTypes from 'prop-types';
 
 export default class Canvas extends React.Component {
