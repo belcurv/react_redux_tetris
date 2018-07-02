@@ -1,0 +1,15 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import './ScoreBoard.css';
+
+const ScoreBoard = ({ score }) => (
+  <div className="score-board">
+    <h1 className="score-board__h1">Score: { score }</h1>
+  </div>
+);
+
+ScoreBoard.propTypes = {
+  score: PropTypes.number
+};
+
+export default ScoreBoard;
