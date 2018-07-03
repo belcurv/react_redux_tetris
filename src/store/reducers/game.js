@@ -1,4 +1,10 @@
-import { createMatrix, merge, resetPlayer, rotate } from '../../utils/';
+import {
+  createMatrix,
+  merge,
+  resetPlayer,
+  rotate,
+  getPalette
+} from '../../utils/';
 
 import {
   PLAYER_ROTATE,
@@ -6,21 +12,23 @@ import {
   PLAYER_DROP,
   PLAYER_RESET,
   UPDATE_SCORE,
-  RESET_SCORE
+  RESET_SCORE,
+  SET_PALETTE
 } from '../actions/playerActions';
 
 import {
   MERGE_PLAYER_ARENA,
   RESET_ARENA,
   UPDATE_ARENA,
-  PAUSE_TOGGLE
+  PAUSE_TOGGLE,
 } from '../actions/gameActions';
 
 const initialGameState = {
   player : {
-    score  : 0,
-    matrix : [],
-    pos    : { x : 0, y : 0 }
+    score   : 0,
+    matrix  : [],
+    palette : getPalette(0),
+    pos     : { x : 0, y : 0 }
   },
   arena : createMatrix(12, 20),
   canvas : {
@@ -104,6 +112,15 @@ export default (state = initialGameState, action) => {
       return {
         ...state,
         arena: createMatrix(12, 20)
+      };
+
+    case SET_PALETTE:
+      return {
+        ...state,
+        player: {
+          ...state.player,
+          palette: getPalette(action.index)
+        }
       };
 
     case UPDATE_ARENA:
