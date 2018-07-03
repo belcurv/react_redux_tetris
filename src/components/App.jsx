@@ -43,7 +43,7 @@ class App extends React.Component {
   
   componentDidMount() {
     /* === for testing dead row insertion === */
-    Mousetrap.bind('x',     () => this.testInsertDeadRows(2));
+    Mousetrap.bind('x',     () => this.testInsertDeadRows(1));
 
     Mousetrap.bind('left',  () => this.playerMove(-1));
     Mousetrap.bind('right', () => this.playerMove(1));
