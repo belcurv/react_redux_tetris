@@ -21,8 +21,8 @@ const calculateKick = (player, arena) => {
     // set x to initial value + offset
     playerCopy.pos.x = initialX + offset;
     
-    // if offset greater than the piece width ...
-    if (offset > playerCopy.matrix[0].length) {
+    // if offset gte than the piece width ...
+    if (offset >= playerCopy.matrix[0].length) {
       return 0;  // ... piece cannot be kicked either direction
     }
   }
