@@ -4,6 +4,7 @@ export const PLAYER_DROP   = 'PLAYER_DROP';
 export const PLAYER_RESET  = 'PLAYER_RESET';
 export const UPDATE_SCORE  = 'UPDATE_SCORE';
 export const RESET_SCORE   = 'RESET_SCORE';
+export const SET_PALETTE   = 'SET_PALETTE';
 
 export function playerRotate(direction) {
   return {
@@ -42,5 +43,12 @@ export function updateScore(value) {
 export function resetScore() {
   return {
     type: RESET_SCORE
+  };
+}
+
+export function setPalette(index) {
+  return {
+    type: SET_PALETTE,
+    index
   };
 }
