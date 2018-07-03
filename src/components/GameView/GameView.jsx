@@ -51,8 +51,6 @@ class GameView extends React.Component {
 
 }
 
-/* ====================== CONNECT COMPONENT TO STORE ======================= */
-
 GameView.propTypes = {
   arena : PropTypes.array.isRequired,
   canvas : PropTypes.shape({
@@ -69,6 +67,9 @@ GameView.propTypes = {
     })
   }).isRequired
 };
+
+
+/* ====================== CONNECT COMPONENT TO STORE ======================= */
 
 const mapStateToProps = (state) => ({
   arena  : state.game.arena,
