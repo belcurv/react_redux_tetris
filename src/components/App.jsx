@@ -14,7 +14,8 @@ import {
   playerReset,
   playerRotate,
   updateScore,
-  resetScore
+  resetScore,
+  setPalette
 } from '../store/actions/playerActions';
 
 import {
@@ -32,11 +33,12 @@ import ScoreBoard from './ScoreBoard/ScoreBoard';
 
 class App extends React.Component {
 
-  // local component state for loop timing variables
+  // local component state for loop timing and palette variables
   state = {
     dropCounter  : 0,
     dropInterval : 1000,
-    lastTime     : 0
+    lastTime     : 0,
+    paletteIndex : 0
   }
   
   componentDidMount() {
@@ -169,10 +171,19 @@ class App extends React.Component {
     this.props.actions.pauseToggle();
   }
 
+  onChangePalette = () => {
+    this.setState(prevState => ({
+      paletteIndex: ((prevState.paletteIndex + 1) % 6)
+    }), () => {
+      this.props.actions.setPalette(this.state.paletteIndex);
+    });
+  }
+
   render() {
     return (
       <div className="app-container">
         <ScoreBoard score={ this.props.player.score }
+          changePalette={ this.onChangePalette }
           pauseToggle={ this.onPauseToggle } />
         <GameView />
       </div>
@@ -201,6 +212,7 @@ App.propTypes = {
     playerRotate     : PropTypes.func,
     updateScore      : PropTypes.func,
     resetScore       : PropTypes.func,
+    setPalette       : PropTypes.func,
     mergePlayerArena : PropTypes.func,
     resetArena       : PropTypes.func,
     updateArena      : PropTypes.func,
@@ -224,6 +236,7 @@ const mapDispatchToProps = (dispatch) => ({
     playerRotate,
     updateScore,
     resetScore,
+    setPalette,
     mergePlayerArena,
     resetArena,
     updateArena,
