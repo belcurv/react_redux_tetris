@@ -12,10 +12,6 @@ import Canvas from '../Canvas/Canvas';
 class GameView extends React.Component {
 
   state  = { context : null };
-  colors = [
-    null,      '#FF0D72', '#0DC2FF', '#0DFF72',
-    '#F538FF', '#FF8E0D', '#FFE138', '#3877FF'
-  ];
 
   draw() {
     const { context } = this.state;
@@ -27,10 +23,11 @@ class GameView extends React.Component {
 
   drawMatrix(matrix, offset) {
     const { context } = this.state;
+    const colors = this.props.player.palette;
     matrix.forEach((row, y) => {
       row.forEach((value, x) => {
         if (value !== 0) {
-          context.fillStyle = this.colors[value];
+          context.fillStyle = colors[value];
           context.fillRect(x + offset.x, y + offset.y, 1, 1);
         }
       });
@@ -64,8 +61,9 @@ GameView.propTypes = {
     scale  : PropTypes.number
   }).isRequired,
   player : PropTypes.shape({
-    matrix : PropTypes.array,
-    pos : PropTypes.shape({
+    matrix  : PropTypes.array,
+    palette : PropTypes.array,
+    pos     : PropTypes.shape({
       x : PropTypes.number,
       y : PropTypes.number
     })
