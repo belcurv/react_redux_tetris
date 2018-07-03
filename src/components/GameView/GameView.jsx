@@ -26,8 +26,11 @@ class GameView extends React.Component {
     const colors = this.props.player.palette;
     matrix.forEach((row, y) => {
       row.forEach((value, x) => {
-        if (value !== 0) {
+        if (value !== 0 && value !== 'X') {
           context.fillStyle = colors[value];
+          context.fillRect(x + offset.x, y + offset.y, 1, 1);
+        } else if (value === 'X') {
+          context.fillStyle = '#555555';
           context.fillRect(x + offset.x, y + offset.y, 1, 1);
         }
       });
