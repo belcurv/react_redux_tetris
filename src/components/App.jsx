@@ -6,14 +6,13 @@ import Mousetrap   from 'mousetrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { collides } from '../utils';
+import { collides, calculateKick } from '../utils';
 
 import {
   playerDrop,
   playerMove,
   playerReset,
   playerRotate,
-  playerSetX,
   updateScore,
   resetScore
 } from '../store/actions/playerActions';
@@ -112,36 +111,26 @@ class App extends React.Component {
           this.props.actions.resetScore();
         }
       }
+      // reset dropCounter to get a full 1 sec after each drop
       this.setState({ dropCounter: 0 });
     }
   }
 
-  // tries to rotate the player matrix.
   playerRotate = (direction) => {
     if (!this.props.gameState.paused) {
       this.props.actions.playerRotate(direction);
-      if ((collides(this.props.arena, this.props.player))) {
-        this.props.actions.playerRotate(-direction);
+      // if we collide after rotating, try to kick left/right
+      if (collides(this.props.arena, this.props.player)) {
+        const kick = calculateKick(this.props.player, this.props.arena);
+        if (kick === 0) {
+          // cannot kick piece to a valid position; undo rotation
+          this.props.actions.playerRotate(-direction);
+        } else {
+          // kick piece left/right by calculated offset
+          this.props.actions.playerMove(kick);
+        }
       }
     }
-
-    // if we colide with something, kick position left/right
-    // KICK DOES NOT WORK WITH "I" PIECES YET
-    // // capture initial x position
-    // const xPos = this.props.player.pos.x;
-    // let offset = 1;
-    // while (collides(this.props.arena, this.props.player)) {
-    //   this.props.actions.playerMove(offset);
-    //   // grow offset by 1 in alternating opposite directions
-    //   offset = -(offset + (offset > 0 ? 1 : -1));
-    //   if (offset > this.props.player.matrix[0].length) {
-    //     // offset exceeds width of the player; un-rotate
-    //     this.props.actions.playerRotate(-direction);
-    //     // reset player x position to captured initial x position
-    //     this.props.actions.playerSetX(xPos);
-    //     return;
-    //   }
-    // }
   }
 
   startLoop = () => {
@@ -155,9 +144,12 @@ class App extends React.Component {
   }
 
   update = (time = 0) => {
-    // perform loop work here
     if (!this.props.gameState.paused) {
+      
+      /* == perform loop work here == */
+      
       const deltaTime = time - this.state.lastTime;
+      
       this.setState(prevState => (
         { dropCounter: prevState.dropCounter + deltaTime }
       ));
@@ -207,7 +199,6 @@ App.propTypes = {
     playerMove       : PropTypes.func,
     playerReset      : PropTypes.func,
     playerRotate     : PropTypes.func,
-    playerSetX       : PropTypes.func,
     updateScore      : PropTypes.func,
     resetScore       : PropTypes.func,
     mergePlayerArena : PropTypes.func,
@@ -220,9 +211,9 @@ App.propTypes = {
 /* ====================== CONNECT COMPONENT TO STORE ======================= */
 
 const mapStateToProps = (state) => ({
-  arena  : state.game.arena,
+  arena     : state.game.arena,
   gameState : state.game.gameState,
-  player : state.game.player
+  player    : state.game.player
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -231,7 +222,6 @@ const mapDispatchToProps = (dispatch) => ({
     playerMove,
     playerReset,
     playerRotate,
-    playerSetX,
     updateScore,
     resetScore,
     mergePlayerArena,
