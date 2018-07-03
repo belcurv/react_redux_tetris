@@ -17,7 +17,6 @@ const palettes = [
  * Returns a custom color palette
 */
 const getPalette = (index) => {
-  // return palettes[(palettes.length - 1) * (Math.random()) | 0];
   return palettes[index];
 };
 
