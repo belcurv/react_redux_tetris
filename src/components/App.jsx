@@ -42,6 +42,9 @@ class App extends React.Component {
   }
   
   componentDidMount() {
+    /* === for testing dead row insertion === */
+    Mousetrap.bind('x',     () => this.testInsertDeadRows(1));
+
     Mousetrap.bind('left',  () => this.playerMove(-1));
     Mousetrap.bind('right', () => this.playerMove(1));
     Mousetrap.bind('down',  () => this.playerDrop());
@@ -60,13 +63,23 @@ class App extends React.Component {
     Mousetrap.unbind('s');
   }
 
+  /* === for testing dead row insertion === */
+  testInsertDeadRows = (qty) => {
+    let newArena = this.props.arena.map(row => row.slice(0));
+    for (let i = 0; i < qty; i++) {
+      let removedRow = newArena.shift();
+      newArena.push(removedRow.fill('X'));
+    }
+    this.props.actions.updateArena(newArena);
+  }
+
   arenaSweep = () => {
     let rowCount = 1;
     let newArena = this.props.arena.map(row => row.slice(0));
     outer: for (let y = newArena.length - 1; y > 0; --y) {
       for (let x = 0; x < newArena[y].length; x++) {
-        // if a row is NOT filled, continue
-        if (newArena[y][x] === 0) {
+        // if a row is NOT filled, or is filled with X's, continue
+        if (newArena[y][x] === 0 || newArena[y][x] === 'X') {
           continue outer;
         }
       }
