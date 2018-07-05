@@ -1,7 +1,7 @@
 export const MERGE_PLAYER_ARENA = 'MERGE_PLAYER_ARENA';
 export const RESET_ARENA        = 'RESET_ARENA';
 export const UPDATE_ARENA       = 'UPDATE_ARENA';
-export const PAUSE_TOGGLE       = 'PAUSE_TOGGLE';
+export const TOGGLE_PAUSE       = 'TOGGLE_PAUSE';
 
 export function mergePlayerArena(player, arena) {
   return {
@@ -24,8 +24,8 @@ export function updateArena(newArena) {
   };
 }
 
-export function pauseToggle() {
+export function togglePause() {
   return {
-    type: PAUSE_TOGGLE
+    type: TOGGLE_PAUSE
   };
 }

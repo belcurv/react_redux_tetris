@@ -20,7 +20,7 @@ import {
   MERGE_PLAYER_ARENA,
   RESET_ARENA,
   UPDATE_ARENA,
-  PAUSE_TOGGLE,
+  TOGGLE_PAUSE,
 } from '../actions/gameActions';
 
 const initialGameState = {
@@ -129,7 +129,7 @@ export default (state = initialGameState, action) => {
         arena: action.newArena
       };
 
-    case PAUSE_TOGGLE:
+    case TOGGLE_PAUSE:
       return {
         ...state,
         gameState: {

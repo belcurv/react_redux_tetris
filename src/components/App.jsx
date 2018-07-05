@@ -22,7 +22,7 @@ import {
   mergePlayerArena,
   resetArena,
   updateArena,
-  pauseToggle
+  togglePause
 } from '../store/actions/gameActions';
 
 import GameView   from './GameView/GameView';
@@ -50,7 +50,7 @@ class App extends React.Component {
     Mousetrap.bind('down',  () => this.playerDrop());
     Mousetrap.bind('a',     () => this.playerRotate(-1));
     Mousetrap.bind('d',     () => this.playerRotate(1));
-    this.props.actions.playerReset(this.props.player);
+    this.props.actions.playerReset();
     this.startLoop();
   }
 
@@ -180,8 +180,8 @@ class App extends React.Component {
     this.frameId = window.requestAnimationFrame(this.update);
   }
 
-  onPauseToggle = () => {
-    this.props.actions.pauseToggle();
+  ontogglePause = () => {
+    this.props.actions.togglePause();
   }
 
   onChangePalette = () => {
@@ -197,7 +197,7 @@ class App extends React.Component {
       <div className="app-container">
         <ScoreBoard score={ this.props.player.score }
           changePalette={ this.onChangePalette }
-          pauseToggle={ this.onPauseToggle } />
+          togglePause={ this.ontogglePause } />
         <GameView />
       </div>
     );
@@ -229,7 +229,7 @@ App.propTypes = {
     mergePlayerArena : PropTypes.func,
     resetArena       : PropTypes.func,
     updateArena      : PropTypes.func,
-    pauseToggle      : PropTypes.func
+    togglePause      : PropTypes.func
   }).isRequired
 };
 
@@ -253,7 +253,7 @@ const mapDispatchToProps = (dispatch) => ({
     mergePlayerArena,
     resetArena,
     updateArena,
-    pauseToggle
+    togglePause
   }, dispatch)
 });
 
