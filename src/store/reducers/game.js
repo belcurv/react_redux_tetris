@@ -21,6 +21,7 @@ import {
   RESET_ARENA,
   UPDATE_ARENA,
   TOGGLE_PAUSE,
+  ROW_FLASH
 } from '../actions/gameActions';
 
 const initialGameState = {
@@ -136,6 +137,14 @@ export default (state = initialGameState, action) => {
           ...state.gameState,
           paused: !state.gameState.paused
         }
+      };
+
+    case ROW_FLASH:
+      return {
+        ...state,
+        arena: state.arena.map((row, y) => {
+          return (y === action.row) ? row.fill('F') : row;
+        })
       };
 
     default:
