@@ -51,7 +51,7 @@ class App extends React.Component {
     Mousetrap.bind('down',  () => this.playerDrop());
     Mousetrap.bind('a',     () => this.playerRotate(-1));
     Mousetrap.bind('d',     () => this.playerRotate(1));
-    this.props.actions.playerReset();
+    this.props.actions.playerReset(this.props.player, this.props.arena);
     this.startLoop();
   }
 
@@ -107,7 +107,7 @@ class App extends React.Component {
   }
 
   playerMove = (direction) => {
-    if (!this.props.gameState.paused) {
+    if (!this.props.paused) {
       this.props.actions.playerMove(direction);
       if (collides(this.props.arena, this.props.player)) {
         this.props.actions.playerMove(-direction);
@@ -116,7 +116,7 @@ class App extends React.Component {
   }
 
   playerDrop = () => {
-    if (!this.props.gameState.paused) {
+    if (!this.props.paused) {
       this.props.actions.playerDrop();
       if (collides(this.props.arena, this.props.player)) {
         this.props.actions.playerDrop(-1);
@@ -125,7 +125,7 @@ class App extends React.Component {
         this.arenaSweep();
         
         // reset player. Create new piece at top
-        this.props.actions.playerReset(this.props.player);
+        this.props.actions.playerReset(this.props.player, this.props.arena);
         // if we collide immediately after resetting, it means we've filed
         // rubble to the top or the arena = game over
         if (collides(this.props.arena, this.props.player)) {
@@ -139,7 +139,7 @@ class App extends React.Component {
   }
 
   playerRotate = (direction) => {
-    if (!this.props.gameState.paused) {
+    if (!this.props.paused) {
       this.props.actions.playerRotate(direction);
       // if we collide after rotating, try to kick left/right
       if (collides(this.props.arena, this.props.player)) {
@@ -166,7 +166,7 @@ class App extends React.Component {
   }
 
   update = (time = 0) => {
-    if (!this.props.gameState.paused) {
+    if (!this.props.paused) {
       
       /* == perform loop work here == */
       
@@ -214,9 +214,7 @@ class App extends React.Component {
 
 App.propTypes = {
   arena : PropTypes.array.isRequired,
-  gameState : PropTypes.shape({
-    paused : PropTypes.bool
-  }).isRequired,
+  paused : PropTypes.bool.isRequired,
   player : PropTypes.shape({
     matrix : PropTypes.array,
     pos : PropTypes.shape({
@@ -244,9 +242,9 @@ App.propTypes = {
 /* ====================== CONNECT COMPONENT TO STORE ======================= */
 
 const mapStateToProps = (state) => ({
-  arena     : state.game.arena,
-  gameState : state.game.gameState,
-  player    : state.game.player
+  arena  : state.game.arena,
+  paused : state.game.paused,
+  player : state.player
 });
 
 const mapDispatchToProps = (dispatch) => ({

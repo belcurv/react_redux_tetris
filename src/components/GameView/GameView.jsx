@@ -80,7 +80,7 @@ GameView.propTypes = {
 const mapStateToProps = (state) => ({
   arena  : state.game.arena,
   canvas : state.game.canvas,
-  player : state.game.player
+  player : state.player
 });
 
 export default connect(mapStateToProps, null)(GameView);

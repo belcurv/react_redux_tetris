@@ -1,20 +1,7 @@
 import {
   createMatrix,
   merge,
-  resetPlayer,
-  rotate,
-  getPalette
 } from '../../utils/';
-
-import {
-  PLAYER_ROTATE,
-  PLAYER_MOVE,
-  PLAYER_DROP,
-  PLAYER_RESET,
-  UPDATE_SCORE,
-  RESET_SCORE,
-  SET_PALETTE
-} from '../actions/playerActions';
 
 import {
   MERGE_PLAYER_ARENA,
@@ -25,88 +12,23 @@ import {
 } from '../actions/gameActions';
 
 const initialGameState = {
-  player : {
-    score   : 0,
-    matrix  : [],
-    palette : getPalette(0),
-    pos     : { x : 0, y : 0 }
-  },
   arena : createMatrix(12, 20),
   canvas : {
     width  : 240,
     height : 400,
     scale  : 20
   },
-  gameState : {
-    paused : false
-  }
+  paused : false
 };
 
 export default (state = initialGameState, action) => {
 
   switch (action.type) {
 
-    case PLAYER_ROTATE:
-      return {
-        ...state,
-        player: {
-          ...state.player,
-          matrix: rotate(state.player.matrix, action.direction)
-        }
-      };
-
-    case PLAYER_MOVE:
-      return {
-        ...state,
-        player: {
-          ...state.player,
-          pos: {
-            ...state.player.pos,
-            x: state.player.pos.x += action.offset
-          }          
-        }
-      };
-
-    case PLAYER_DROP:
-      return {
-        ...state,
-        player: {
-          ...state.player,
-          pos: {
-            ...state.player.pos,
-            y: state.player.pos.y += action.direction
-          }          
-        }
-      };
-
-    case PLAYER_RESET:
-      return {
-        ...state,
-        player: (resetPlayer(state.player, state.arena))
-      };
-
     case MERGE_PLAYER_ARENA:
       return {
         ...state,
         arena: merge(action.player, action.arena)
-      };
-
-    case UPDATE_SCORE:
-      return {
-        ...state,
-        player: {
-          ...state.player,
-          score: state.player.score += action.value
-        }
-      };
-
-    case RESET_SCORE:
-      return {
-        ...state,
-        player: {
-          ...state.player,
-          score: 0
-        }
       };
 
     case RESET_ARENA:
@@ -115,14 +37,6 @@ export default (state = initialGameState, action) => {
         arena: createMatrix(12, 20)
       };
 
-    case SET_PALETTE:
-      return {
-        ...state,
-        player: {
-          ...state.player,
-          palette: getPalette(action.index)
-        }
-      };
 
     case UPDATE_ARENA:
       return {
@@ -133,10 +47,7 @@ export default (state = initialGameState, action) => {
     case TOGGLE_PAUSE:
       return {
         ...state,
-        gameState: {
-          ...state.gameState,
-          paused: !state.gameState.paused
-        }
+        paused: !state.paused
       };
 
     case ROW_FLASH:

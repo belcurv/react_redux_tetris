@@ -27,9 +27,11 @@ export function playerDrop(direction = 1) {
   };
 }
 
-export function playerReset() {
+export function playerReset(player, arena) {
   return {
-    type: PLAYER_RESET
+    type: PLAYER_RESET,
+    player,
+    arena
   };
 }
 
