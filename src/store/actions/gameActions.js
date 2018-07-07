@@ -2,6 +2,7 @@ export const MERGE_PLAYER_ARENA = 'MERGE_PLAYER_ARENA';
 export const RESET_ARENA        = 'RESET_ARENA';
 export const UPDATE_ARENA       = 'UPDATE_ARENA';
 export const TOGGLE_PAUSE       = 'TOGGLE_PAUSE';
+export const ROW_FLASH          = 'ROW_FLASH';
 
 export function mergePlayerArena(player, arena) {
   return {
@@ -27,5 +28,12 @@ export function updateArena(newArena) {
 export function togglePause() {
   return {
     type: TOGGLE_PAUSE
+  };
+}
+
+export function rowFlash(row) {
+  return {
+    type: ROW_FLASH,
+    row
   };
 }

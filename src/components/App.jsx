@@ -22,7 +22,8 @@ import {
   mergePlayerArena,
   resetArena,
   updateArena,
-  togglePause
+  togglePause,
+  rowFlash
 } from '../store/actions/gameActions';
 
 import GameView   from './GameView/GameView';
@@ -84,18 +85,24 @@ class App extends React.Component {
         }
       }
 
-      // remove the row with all filled positions, return zero-filled row
-      const row = newArena.splice(y, 1)[0].fill(0);
-      // insert that zeroed row at the top of the arena
-      newArena.unshift(row);
-      // update actual arena
-      this.props.actions.updateArena(newArena);
-      // increment y since we removed a row
-      y++;
-      // update player score
-      this.props.actions.updateScore(rowCount * 10);
-      // make each additional filled row count 2x as much
-      rowCount *= 2;
+      this.props.actions.rowFlash(y);
+
+      setTimeout(() => {
+        // remove the row with all filled positions, return zero-filled row
+        const row = newArena.splice(y, 1)[0].fill(0);
+        // insert that zeroed row at the top of the arena
+        newArena.unshift(row);
+        // update actual arena
+        this.props.actions.updateArena(newArena);
+        // increment y since we removed a row
+        y++;
+        // update player score
+        this.props.actions.updateScore(rowCount * 10);
+        // make each additional filled row count 2x as much
+        rowCount *= 2;
+
+      }, 200);
+
     }
   }
 
@@ -229,7 +236,8 @@ App.propTypes = {
     mergePlayerArena : PropTypes.func,
     resetArena       : PropTypes.func,
     updateArena      : PropTypes.func,
-    togglePause      : PropTypes.func
+    togglePause      : PropTypes.func,
+    rowFlash         : PropTypes.func
   }).isRequired
 };
 
@@ -253,7 +261,8 @@ const mapDispatchToProps = (dispatch) => ({
     mergePlayerArena,
     resetArena,
     updateArena,
-    togglePause
+    togglePause,
+    rowFlash
   }, dispatch)
 });
 
