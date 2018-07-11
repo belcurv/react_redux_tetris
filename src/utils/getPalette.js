@@ -1,6 +1,4 @@
 const palettes = [
-  [ null,      '#FF0D72', '#0DC2FF', '#0DFF72',
-    '#F538FF', '#FF8E0D', '#FFE138', '#3877FF' ],
   [ null,      '#727540', '#8d934b', '#c9d39e',
     '#4a879a', '#6ba9c2', '#a1b089', '#3f4e31' ],
   [ null,      '#3d86a7', '#f7dbb3', '#c08c5c',
