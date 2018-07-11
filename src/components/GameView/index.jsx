@@ -4,7 +4,7 @@ import React       from 'react';
 import PropTypes   from 'prop-types';
 import { connect } from 'react-redux';
 
-import Canvas from '../Canvas/Canvas';
+import Canvas from '../Canvas';
 
 
 /* =========================== CLASS DEFINITION ============================ */
