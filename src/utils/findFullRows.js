@@ -8,10 +8,9 @@ const findFullRows = (arena) => {
   return arena
     .reduce((fullRows, row, ind) => {
       return row.every(value => (value > 0 && value < 8))
-        ? fullRows.concat(ind)
+        ? [ind, ...fullRows] // add new element to front of existing array
         : fullRows;
-    }, [])
-    .reverse();
+    }, []);
 };
 
 export default findFullRows;
