@@ -1,6 +1,6 @@
-import Opponent from '../../models/opponent';
+import Opponent from '../models/opponent';
 
-import { getPalette } from '../../utils/';
+import { getPalette } from '../utils/';
 
 import {
   SET_OPPONENT_POS,

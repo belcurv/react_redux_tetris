@@ -1,7 +1,7 @@
 import {
   createMatrix,
   merge,
-} from '../../utils/';
+} from '../utils/';
 
 import {
   MERGE_PLAYER_ARENA,

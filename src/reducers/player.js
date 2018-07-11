@@ -1,10 +1,10 @@
-import Player from '../../models/player';
+import Player from '../models/player';
 
 import {
   resetPlayer,
   rotate,
   getPalette
-} from '../../utils/';
+} from '../utils/';
 
 import {
   PLAYER_ROTATE,
