@@ -97,7 +97,7 @@ class App extends React.Component {
 
       setTimeout(() => {
         // must increment row + index as we splice rows out
-        const removedRow = newArena.splice(row + ind, 1)[0].fill('F');
+        const removedRow = newArena.splice(row + ind, 1)[0];
         // insert that zeroed row at the top of the arena
         newArena.unshift(removedRow.fill(0));
         this.props.actions.updateScore(rowPointVal * 10);
