@@ -7,13 +7,13 @@ module.exports = merge(common, {
 
   entry : [
     'webpack-dev-server/client?http://localhost:8080',
-    './src/index.jsx'
+    './client/src/index.jsx'
   ],
 
   devtool : 'inline-source-map',
 
   devServer : {
-    contentBase : './dist',
+    contentBase : './client/dist',
     historyApiFallback: true
   }
 
