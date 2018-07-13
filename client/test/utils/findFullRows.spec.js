@@ -10,7 +10,7 @@ import findFullRows from '../../src/utils/findFullRows';
 
 describe('findFullRows utility', () => {
 
-  it('should return 4', () => {
+  it('should return [4]', () => {
     const arena = [
       [0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0],
@@ -21,7 +21,7 @@ describe('findFullRows utility', () => {
     assert.deepEqual(findFullRows(arena), [4]);
   });
 
-  it('should return 4', () => {
+  it('should return [4, 3]', () => {
     const arena = [
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0],
@@ -32,7 +32,7 @@ describe('findFullRows utility', () => {
     assert.deepEqual(findFullRows(arena), [4, 3]);
   });
 
-  it('should return 4', () => {
+  it('should return [3, 1]', () => {
     const arena = [
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -43,7 +43,7 @@ describe('findFullRows utility', () => {
     assert.deepEqual(findFullRows(arena), [3, 1]);
   });
 
-  it('should return 3', () => {
+  it('should return [3]', () => {
     const arena = [
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -54,7 +54,7 @@ describe('findFullRows utility', () => {
     assert.deepEqual(findFullRows(arena), [3]);
   });
 
-  it('should return 3', () => {
+  it('should return [3]', () => {
     const arena = [
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -65,7 +65,7 @@ describe('findFullRows utility', () => {
     assert.deepEqual(findFullRows(arena), [3]);
   });
 
-  it('should return 2', () => {
+  it('should return [2]', () => {
     const arena = [
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -76,7 +76,7 @@ describe('findFullRows utility', () => {
     assert.deepEqual(findFullRows(arena), [2]);
   });
 
-  it('should return 1', () => {
+  it('should return [1]', () => {
     const arena = [
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
