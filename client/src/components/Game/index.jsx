@@ -29,6 +29,15 @@ import {
 import GameView   from '../GameView';
 import ScoreBoard from '../ScoreBoard';
 
+/* testing event bus */
+import Events from '../../models/events';
+
+const events = new Events();
+
+console.log('=== testing emit from Game component ===');
+events.emit('TEST_EVENT_2', 'Game component emitted this event 2 data!');
+events.emit('TEST_EVENT_1', 'Game component emitted this event 1 data!');
+
 
 /* =========================== CLASS DEFINITION ============================ */
 
